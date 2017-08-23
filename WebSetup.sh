@@ -1,5 +1,35 @@
 #!/bin/bash
 #
+# StackScript Bash Library
+#
+# Copyright (c) 2010 Linode LLC / Christopher S. Aker <caker@linode.com>
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modification, 
+# are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+# list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice, this
+# list of conditions and the following disclaimer in the documentation and/or
+# other materials provided with the distribution.
+#
+# * Neither the name of Linode LLC nor the names of its contributors may be
+# used to endorse or promote products derived from this software without specific prior
+# written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+# EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+# SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+# TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+# DAMAGE.
+
 ###########################################################
 # System
 ###########################################################
@@ -34,9 +64,12 @@ function get_rdns_primary_ip {
 ###########################################################
 function goodstuff {
         # Installs the REAL vim, wget, less, and enables color root prompt and the "ll" list long alias
+        echo 'Installing wget, vim, and less'
+
         aptitude -y install wget vim less
         sed -i -e 's/^#PS1=/PS1=/' /root/.bashrc # enable the colorful root bash prompt
         sed -i -e "s/^#alias ll='ls -l'/alias ll='ls -al'/" /root/.bashrc # enable ll list long alias <3
+        sed -i -e "s/^#source ~/.bashrc" /root/.bash_profile #source bashrc so that alias's work upon login.
 }
 
 ###########################################################
@@ -45,9 +78,13 @@ function goodstuff {
 
 function webservices_install{
 #wether or not to install vestaCP if not we will need to install Apache, MySQL, and PHP
-if [ ! -n "$1"];
-        then  isntallVesta=1
-        else  installVesta=0
+echo 'Do you want to install VestaCP? (y or n)'
+read installVesta
+if [$installVesta=y] 
+        then
+            installVesta=1
+        else
+            installVesta=0
 fi
 
 if [installVesta -eq 1]
@@ -246,7 +283,7 @@ if [installVesta -eq 1]
                 echo 'SET GLOBAL slow_query_log="ON";SET GLOBAL long_query_time=1' | mysql -u$1 -p$2
                 echo 'Slow Query Logging has been enabled, creating symlink from log directory to home directory'
                 ln -s /var/lib/mysql/ /root/slow_logs/
-                
+
         }
         ###########################################################
         # PHP functions
