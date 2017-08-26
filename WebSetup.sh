@@ -66,10 +66,10 @@ function goodstuff {
         # Installs the REAL vim, wget, less, and enables color root prompt and the "ll" list long alias
         echo 'Installing wget, vim, and less'
 
-        aptitude -y install wget vim less
-        sed -i -e 's/^#PS1=/PS1=/' /root/.bashrc # enable the colorful root bash prompt
-        sed -i -e "s/^#alias ll='ls -l'/alias ll='ls -al'/" /root/.bashrc # enable ll list long alias <3
-        sed -i -e "s/^#source ~/.bashrc" /root/.bash_profile #source bashrc so that alias's work upon login.
+        sudo aptitude -y install wget vim less
+        sudo sed -i -e 's/^#PS1=/PS1=/' /root/.bashrc # enable the colorful root bash prompt
+        sudo sed -i -e "s/^#alias ll='ls -l'/alias ll='ls -al'/" /root/.bashrc # enable ll list long alias <3
+        sudo sed -i -e "s/^#source ~/.bashrc" /root/.bash_profile #source bashrc so that alias's work upon login.
 }
 
 ###########################################################
