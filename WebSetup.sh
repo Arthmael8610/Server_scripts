@@ -278,7 +278,7 @@ if [installVesta -eq 1]
                         echo "GRANT ALL PRIVILEGES ON $3.* TO '$2'@'localhost';" | mysql -u root -p$1
                         echo "FLUSH PRIVILEGES;" | mysql -u root -p$1
                 }
-                function start_mysql_slow_logging{
+                function start_mysql_slow_logging {
                         #$1 - mysql root user
                         #$2 - musql root password
                         echo 'SET GLOBAL slow_query_log="ON";SET GLOBAL long_query_time=1' | mysql -u$1 -p$2
