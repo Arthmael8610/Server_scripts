@@ -35,9 +35,9 @@
 ###########################################################
 
 function system_update {
-        apt-get update
-        apt-get -y install aptitude
-        aptitude -y full-upgrade
+        sudo apt-get update
+        sudo apt-get -y install aptitude
+        sudo aptitude -y full-upgrade
 }
 
 function system_primary_ip {
