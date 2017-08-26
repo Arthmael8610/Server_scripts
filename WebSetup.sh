@@ -80,7 +80,7 @@ function webservices_install {
 #wether or not to install vestaCP if not we will need to install Apache, MySQL, and PHP
 echo 'Do you want to install VestaCP? (y or n)'
 read installVesta
-if [$installVesta=y] 
+if [$installVesta -eq y] 
         then
             installVesta=1
         else
